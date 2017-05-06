@@ -30,6 +30,8 @@ public:
     // TODO:constructor
     Json();         // default, create an empty object
     Json(const std::string& text);
+    Json(const std::shared_ptr<Json_Value> &js): ptr_data(js) {}
+
     friend Json createJsonWithFile(const std::string& filename);
     // 内部实现
 //    template <typename T>
@@ -44,7 +46,8 @@ public:
     Json_Value&operator[](const std::string& attr_name);
     const Json_Value &operator[](const std::string& attr_name) const;
     // TODO: update
-    std::shared_ptr<Json> append(const Json& json);
+    void append(const Json& json);
+    void append_to_object(const std::string& key,const Json& value);
 private:
     std::shared_ptr<Json_Value> ptr_data;
 };

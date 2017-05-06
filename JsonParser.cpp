@@ -70,8 +70,11 @@ std::shared_ptr<Json_Value> JsonParser::get_value() {       // 任意get 一个j
                 break;
         }
     }
-    else        // 啥都没有找到
-        return nullptr;
+    else {
+        std::cerr << "some thing wrong with the json file" << std::endl;
+        exit(1);
+        // exception
+    }
 }
 
 inline bool _in_split(const char *split, int n, char ch) {
@@ -177,6 +180,7 @@ std::shared_ptr<Json_Value> JsonParser::get_digit() {
     if (current == token::MINUS) {
         symbol = -1;
         ++index;
+        skip_whitespace();  // prevent - 2
         if (isdigit(_to_interpret[index])) {
             current = token::DIGIT;
         } else {
@@ -244,7 +248,6 @@ int JsonParser::eat(JsonParser::token typeT) {
             skip_whitespace();
             break;
         case token::STR:
-            printf("xxd\n");
         case token::TRUE:
         case token::FALSE:
         case token::DIGIT:

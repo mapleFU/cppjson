@@ -24,18 +24,18 @@ private:
         while (_to_interpret.length() > index && (_to_interpret[index] == ' ' || _to_interpret[index] == '\n' || _to_interpret[index] == '\t'))
             ++index;
     }
-    std::shared_ptr<Json_Value> get_object();
-    std::shared_ptr<Json_Value> get_value();
-    std::shared_ptr<Json_Value> get_array();
+
 
 
 private:
     std::string get_name();
     std::shared_ptr<Json_Value> get_null();
     std::shared_ptr<Json_Value> get_boolean();
-    std::shared_ptr<Json_Value> get_string();
+    inline std::shared_ptr<Json_Value> get_string();
     std::shared_ptr<Json_Value> get_digit();
-
+    std::shared_ptr<Json_Value> get_object();
+    std::shared_ptr<Json_Value> get_value();
+    std::shared_ptr<Json_Value> get_array();
     // 吞字符
     void get_next_token();
     int eat(token typeT);

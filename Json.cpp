@@ -45,6 +45,26 @@ const Json_Value &Json::operator[](const std::string &attr_name) const {
     return *(*p)[attr_name];
 }
 
-std::shared_ptr<Json> Json::append(const Json &json) {
-
+void Json::append(const Json &json) {
+    if (this->ptr_data->get_type() == JSON_ARRAY) {
+        auto arr_ptr = std::dynamic_pointer_cast<ValueArray>(ptr_data);
+        arr_ptr->append(json.ptr_data);
+    } else {
+        std::cout << "Error, this json object is not a json array" << std::endl;
+        exit(1);
+    }
 }
+
+void Json::append_to_object(const std::string &key, const Json &value) {
+    if (this->ptr_data->get_type() == JSON_OBJECT) {
+        auto obj_ptr = std::dynamic_pointer_cast<ValueObject>(ptr_data);
+        obj_ptr->json_data[key] = value.ptr_data;
+    } else {
+        std::cout << "Error, this json object is not a json object" << std::endl;
+        exit(1);
+    }
+}
+
+
+
+
